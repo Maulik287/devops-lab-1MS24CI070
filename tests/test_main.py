@@ -10,12 +10,20 @@ def run_before_and_after_tests():
     yield
     todos_db.clear()
 
+def test_health_check():
+    """Test the /health endpoint returns healthy status and service info."""
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "healthy", "service": "todo-api", "version": "1.0.0"}
+
 def test_get_todos_empty():
+    """Test retrieving todos when the database is empty."""
     response = client.get("/todos")
     assert response.status_code == 200
     assert response.json() == []
 
 def test_create_todo():
+    """Test creating a new todo item and verify persistence."""
     payload = {"title": "Submit DevOps Lab", "description": "Complete assignment for 25CIAEC59", "completed": False}
     response = client.post("/todos", json=payload)
     assert response.status_code == 201

@@ -1,0 +1,6 @@
+---
+# defaults file for webapp
+app_name: todo-api
+app_port: 8000
+app_dir: "/tmp/devops-todo-app"
+app_artifact_src: "{{ playbook_dir }}/../dist/app-artifact.tar.gz"

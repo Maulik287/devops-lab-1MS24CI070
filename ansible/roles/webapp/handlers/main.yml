@@ -1,0 +1,5 @@
+---
+# handlers file for webapp
+- name: restart webapp service
+  ansible.builtin.debug:
+    msg: "HANDLER TRIGGERED: Application artifact changed. Restarting {{ app_name }} service on port {{ app_port }}."

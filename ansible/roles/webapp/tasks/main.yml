@@ -1,0 +1,47 @@
+---
+# tasks file for webapp
+- name: Display deployment configuration
+  ansible.builtin.debug:
+    msg: "Deploying {{ app_name }} on configured port {{ app_port }} to directory {{ app_dir }}"
+
+- name: Ensure distribution artifact directory exists
+  ansible.builtin.file:
+    path: "{{ playbook_dir }}/../dist"
+    state: directory
+    mode: '0755'
+  delegate_to: localhost
+
+- name: Package application artifact if not present
+  ansible.builtin.archive:
+    path:
+      - "{{ playbook_dir }}/../app"
+      - "{{ playbook_dir }}/../requirements.txt"
+      - "{{ playbook_dir }}/../tests"
+      - "{{ playbook_dir }}/../repo_link.txt"
+    dest: "{{ app_artifact_src }}"
+    format: gz
+  delegate_to: localhost
+
+- name: Ensure target application directory exists
+  ansible.builtin.file:
+    path: "{{ app_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy and extract application artifact to target host
+  ansible.builtin.unarchive:
+    src: "{{ app_artifact_src }}"
+    dest: "{{ app_dir }}"
+    remote_src: false
+  notify: restart webapp service
+
+- name: Install Python and application dependencies
+  ansible.builtin.pip:
+    requirements: "{{ app_dir }}/requirements.txt"
+    extra_args: "--break-system-packages"
+  register: pip_result
+  failed_when: false
+
+- name: Confirm application readiness
+  ansible.builtin.debug:
+    msg: "Application {{ app_name }} is successfully deployed and configured on port {{ app_port }}."

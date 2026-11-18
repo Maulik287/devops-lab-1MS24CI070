@@ -17,6 +17,11 @@ class TodoItem(BaseModel):
 
 todos_db: List[TodoItem] = []
 
+@app.get("/health", status_code=status.HTTP_200_OK)
+def health_check():
+    """Health check endpoint for Kubernetes probes and monitoring."""
+    return {"status": "healthy", "service": "todo-api", "version": "1.0.0"}
+
 @app.get("/todos", response_model=List[TodoItem], status_code=status.HTTP_200_OK)
 def get_todos():
     """Retrieve all todo items."""

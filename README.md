@@ -1,5 +1,5 @@
 # DevOps Lab Assignment - Component 1 & 2
-**Course Code:** 25CIAEC59 / 25CYAEC59  
+**Course Code:** 25CIAEC59 
 **USN / Student ID:** 1MS24CI070  
 **Repository:** [https://github.com/Maulik287/devops-lab-1MS24CI070](https://github.com/Maulik287/devops-lab-1MS24CI070)
 

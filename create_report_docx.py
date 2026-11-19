@@ -753,28 +753,28 @@ Status: Completed successfully (Green Checkmark)
 Artifacts uploaded: app-artifact (dist/app-artifact.tar.gz)"""
     add_figure_box(doc, 9, "CI Enhancement: GitHub Actions CI workflow executing automated build and tests", fig9_text, image_path="images/fig9_github_actions.png")
     
-    fig10_text = """[poll] Last Built Revision: 5c93ad897e... (refs/remotes/origin/main)
-> git.exe ls-remote -h -- https://github.com/Maulik287/devops-lab-1MS24CI070.git # timeout=10
+    fig10_text = """[poll] Last Built Revision: Revision f7065dc67ae308c4228ed5d67216406de959dfb6
+> git ls-remote -h -- https://github.com/Maulik287/devops-lab-1MS24CI070.git # timeout=10
 Found 2 remote heads on https://github.com/Maulik287/devops-lab-1MS24CI070.git
-[poll] Latest remote head revision on refs/heads/main is: 2cf6ae7d...
-Done. Took 0.82 sec
-Changes found"""
-    add_figure_box(doc, 10, "Jenkins Polling Log showing automatic trigger upon detecting remote changes", fig10_text)
+[poll] Latest remote head revision on refs/heads/main is: f7065dc67ae308c4228ed5d67216406de959dfb6
+Done. Took 1.3 sec"""
+    add_figure_box(doc, 10, "Jenkins Polling Log showing automatic trigger upon detecting remote changes", fig10_text, image_path="images/fig10_jenkins_polling_log.png")
     
-    fig11_text = """[Pipeline] { (Run Unit Tests) }
-[Pipeline] sh
-+ . venv/bin/activate
-+ pytest -v tests/
-tests/test_main.py::test_health_check PASSED
-tests/test_main.py::test_get_todos_empty PASSED
-tests/test_main.py::test_create_todo PASSED
-[Pipeline] { (Package Artifact) }
-[Pipeline] sh
-+ tar -czvf dist/app-artifact.tar.gz app/ requirements.txt tests/ repo_link.txt
+    fig11_text = """[Pipeline] sh
++ tar --exclude=.git --exclude=venv --exclude=__pycache__ --exclude=.pytest_cache -czvf dist/app-artifact.tar.gz app/ requirements.txt tests/ repo_link.txt
+app/
+app/main.py
+requirements.txt
+tests/test_main.py
+repo_link.txt
++ ls -lh dist/
+total 4.0K
+-rw-r--r-- 1 jenkins jenkins 1.5K Nov 19 06:50 app-artifact.tar.gz
 [Pipeline] archiveArtifacts
-Archiving artifacts: dist/app-artifact.tar.gz
+Archiving artifacts
+Recording fingerprints
 Finished: SUCCESS"""
-    add_figure_box(doc, 11, "Jenkins console output displaying test execution, packaging, and SUCCESS status", fig11_text)
+    add_figure_box(doc, 11, "Jenkins console output displaying test execution, packaging, and SUCCESS status", fig11_text, image_path="images/fig11_jenkins_console_output.png")
     
     p = doc.add_paragraph()
     r = p.add_run("Conclusion — Component 1\n")

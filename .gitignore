@@ -45,3 +45,12 @@ app-artifact.tar.gz
 .vscode/
 .idea/
 *.swp
+
+# Overleaf and LaTeX local files
+overleaf_project/
+overleaf_teacher_project/
+teacher_template/
+generate_overleaf_tex.py
+generate_teacher_tex.py
+*.pdf
+~$*

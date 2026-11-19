@@ -297,14 +297,7 @@ Next, I set up Jenkins with SCM polling (`* * * * *`). Pushing changes to GitHub
 
 ## Results — Component 1
 
-```text
-* 2cf6ae7 feat(devops): add Jenkinsfile, GitHub Actions CI, Ansible role, Dockerfile, and K8s manifests
-*   5c93ad8 Merge branch 'feature/health-endpoint' into main
-|\  
-| * 89de196 feat(api): add /health endpoint and probe test
-|/  
-* a198fb3 feat: initial commit with Todo REST API and unit tests
-```
+![Figure 1: Git commit graph showing feature branch and non-fast-forward merge commit](images/fig1_git_graph.png)
 *Figure 1: Git commit graph showing feature branch and non-fast-forward merge commit*
 
 ```text
@@ -360,19 +353,7 @@ Post Action: archiveArtifacts 'dist/app-artifact.tar.gz'
 ```
 *Figure 6: Jenkins pipeline stages overview and build steps definition*
 
-```text
-pytest -v tests/
-============================= test session starts =============================
-platform win32 -- Python 3.14.0, pytest-9.2.0, pluggy-1.7.0
-rootdir: C:\Users\mauli\OneDrive\Documents\College(waste)
-collected 3 items
-
-tests/test_main.py::test_health_check PASSED                             [ 33%]
-tests/test_main.py::test_get_todos_empty PASSED                          [ 66%]
-tests/test_main.py::test_create_todo PASSED                              [100%]
-
-======================== 3 passed, 1 warning in 1.62s =========================
-```
+![Figure 7: CI Enhancement: Automated Pytest unit test suite passing 3 out of 3 tests](images/fig7_pytest_pass.png)
 *Figure 7: CI Enhancement: Automated Pytest unit test suite passing 3 out of 3 tests*
 
 ```text
@@ -386,14 +367,7 @@ Changes:
 ```
 *Figure 8: Jenkins build overview showing archived artifact dist/app-artifact.tar.gz*
 
-```text
-GitHub Actions CI Workflow:
-Workflow: CI Pipeline (.github/workflows/ci.yml)
-Trigger: push on branch main
-Job: Build & Test
-Status: Completed successfully (Green Checkmark)
-Artifacts uploaded: app-artifact (dist/app-artifact.tar.gz)
-```
+![Figure 9: CI Enhancement: GitHub Actions CI workflow executing automated build and tests](images/fig9_github_actions.png)
 *Figure 9: CI Enhancement: GitHub Actions CI workflow executing automated build and tests*
 
 ```text
@@ -676,28 +650,8 @@ Building the multi-stage Docker image produced `devops-todo-api:v1`. Deploying t
 
 ## Results — Component 2
 
-```text
-PLAY [Deploy FastAPI Web Application] ******************************************
-TASK [Gathering Facts] *********************************************************
-ok: [localhost]
-TASK [webapp : Display deployment configuration] *******************************
-ok: [localhost] => {"msg": "Deploying todo-api on configured port 8000..."}
-TASK [webapp : Ensure distribution artifact directory exists] ******************
-changed: [localhost]
-TASK [webapp : Package application artifact if not present] ********************
-changed: [localhost]
-TASK [webapp : Ensure target application directory exists] *********************
-changed: [localhost]
-TASK [webapp : Copy and extract application artifact to target host] ***********
-changed: [localhost]
-TASK [webapp : Install Python and application dependencies] ********************
-ok: [localhost]
-RUNNING HANDLER [webapp : restart webapp service] ******************************
-ok: [localhost] => {"msg": "HANDLER TRIGGERED: Application artifact changed. Restarting todo-api service on port 8000."}
-PLAY RECAP *********************************************************************
-localhost : ok=9    changed=4    unreachable=0    failed=0
-```
-*Figure 12: Ansible playbook initial run: tasks execute and handler triggers restart (changed=4, failed=0)*
+![Figure 12: Ansible playbook initial run: tasks execute and handler triggers restart (changed=3, failed=0)](images/fig12_ansible_playbook.png)
+*Figure 12: Ansible playbook initial run: tasks execute and handler triggers restart (changed=3, failed=0)*
 
 ```text
 ansible-playbook -i ansible/inventory.ini ansible/playbook.yml

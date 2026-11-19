@@ -39,7 +39,27 @@ def add_code_block(doc, code_text):
     run.font.color.rgb = RGBColor(0x22, 0x22, 0x22)
     doc.add_paragraph().paragraph_format.space_after = Pt(4)
 
-def add_figure_box(doc, fig_number, fig_title, terminal_output_text):
+def add_figure_box(doc, fig_number, fig_title, terminal_output_text, image_path=None):
+    if image_path and os.path.exists(image_path):
+        p_img = doc.add_paragraph()
+        p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_img.paragraph_format.space_before = Pt(6)
+        p_img.paragraph_format.space_after = Pt(4)
+        run_img = p_img.add_run()
+        run_img.add_picture(image_path, width=Inches(6.0))
+        
+        p_cap = doc.add_paragraph()
+        p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_cap.paragraph_format.space_before = Pt(2)
+        p_cap.paragraph_format.space_after = Pt(10)
+        r_cap = p_cap.add_run(f"Figure {fig_number}: {fig_title}")
+        r_cap.font.name = "Times New Roman"
+        r_cap.font.size = Pt(10)
+        r_cap.font.italic = True
+        r_cap.font.bold = True
+        r_cap.font.color.rgb = RGBColor(0x22, 0x22, 0x22)
+        return
+
     tbl = doc.add_table(rows=2, cols=1)
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
     
@@ -666,7 +686,7 @@ def test_create_todo():
 | * 89de196 feat(api): add /health endpoint and probe test
 |/  
 * a198fb3 feat: initial commit with Todo REST API and unit tests"""
-    add_figure_box(doc, 1, "Git commit graph showing feature branch and non-fast-forward merge commit", fig1_text)
+    add_figure_box(doc, 1, "Git commit graph showing feature branch and non-fast-forward merge commit", fig1_text, image_path="images/fig1_git_graph.png")
     
     fig2_text = """[feature/health-endpoint 89de196] feat(api): add /health endpoint and probe test
  2 files changed, 13 insertions(+)
@@ -723,7 +743,7 @@ tests/test_main.py::test_get_todos_empty PASSED                          [ 66%]
 tests/test_main.py::test_create_todo PASSED                              [100%]
 
 ======================== 3 passed, 1 warning in 1.62s ========================="""
-    add_figure_box(doc, 7, "CI Enhancement: Automated Pytest unit test suite passing 3 out of 3 tests", fig7_text)
+    add_figure_box(doc, 7, "CI Enhancement: Automated Pytest unit test suite passing 3 out of 3 tests", fig7_text, image_path="images/fig7_pytest_pass.png")
     
     fig8_text = """Jenkins Build #3 Overview:
 Status: SUCCESS
@@ -740,7 +760,7 @@ Trigger: push on branch main
 Job: Build & Test
 Status: Completed successfully (Green Checkmark)
 Artifacts uploaded: app-artifact (dist/app-artifact.tar.gz)"""
-    add_figure_box(doc, 9, "CI Enhancement: GitHub Actions CI workflow executing automated build and tests", fig9_text)
+    add_figure_box(doc, 9, "CI Enhancement: GitHub Actions CI workflow executing automated build and tests", fig9_text, image_path="images/fig9_github_actions.png")
     
     fig10_text = """[poll] Last Built Revision: 5c93ad897e... (refs/remotes/origin/main)
 > git.exe ls-remote -h -- https://github.com/Maulik287/devops-lab-1MS24CI070.git # timeout=10
@@ -1145,7 +1165,7 @@ RUNNING HANDLER [webapp : restart webapp service] ******************************
 ok: [localhost] => {"msg": "HANDLER TRIGGERED: Application artifact changed. Restarting todo-api service on port 8000."}
 PLAY RECAP *********************************************************************
 localhost : ok=9    changed=4    unreachable=0    failed=0"""
-    add_figure_box(doc, 12, "Ansible playbook initial run: tasks execute and handler triggers restart (changed=4, failed=0)", fig12_text)
+    add_figure_box(doc, 12, "Ansible playbook initial run: tasks execute and handler triggers restart (changed=4, failed=0)", fig12_text, image_path="images/fig12_ansible_playbook.png")
     
     fig13_text = """ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
 PLAY [Deploy FastAPI Web Application] ******************************************
@@ -1339,5 +1359,10 @@ Date:   Wed Nov 18 20:58:34 2026 +0530
     print(f"Successfully generated {filename}")
 
 if __name__ == "__main__":
-    out_docx = "DevOps_Self_Learning_Activity_Report_1MS24CI070.docx"
+    out_docx = "DevOps_Self_Learning_Activity_Report_1MS24CI070_Final.docx"
     build_docx(out_docx)
+    try:
+        build_docx("DevOps_Self_Learning_Activity_Report_1MS24CI070.docx")
+        print("Updated original file as well")
+    except Exception as e:
+        print("Could not update locked file, but generated Final file:", e)

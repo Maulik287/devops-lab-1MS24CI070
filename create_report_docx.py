@@ -708,29 +708,21 @@ branch 'feature/health-endpoint' set up to track 'origin/feature/health-endpoint
     fig4_text = """Jenkins Job: devops-todo-pipeline
 Source Code Management: Git
 Repository URL: https://github.com/Maulik287/devops-lab-1MS24CI070.git
-Branches to build: */main
-Script Path: Jenkinsfile
+Credentials: - none -
 Lightweight checkout: Enabled"""
-    add_figure_box(doc, 4, "Jenkins job configuration: Source Code Management pointing to GitHub repository", fig4_text)
+    add_figure_box(doc, 4, "Jenkins job configuration: Source Code Management pointing to GitHub repository", fig4_text, image_path="images/fig4_jenkins_scm.png")
     
     fig5_text = """Build Triggers:
 [X] Poll SCM
 Schedule: * * * * *
-Polling Log:
-Started on Nov 18, 2026, 8:45:00 PM
-Using strategy: Default
-[poll] Last Built Revision: a198fb3...
-[poll] Latest remote head on refs/heads/main is: 2cf6ae7...
-Changes found. Triggering build."""
-    add_figure_box(doc, 5, "Jenkins job configuration: Poll SCM schedule (* * * * *) detecting new commits", fig5_text)
+Polling Log: Automatic background check every minute for commits on refs/heads/main."""
+    add_figure_box(doc, 5, "Jenkins job configuration: Poll SCM schedule (* * * * *) detecting new commits", fig5_text, image_path="images/fig5_jenkins_poll_scm.png")
     
-    fig6_text = """Jenkins Declarative Pipeline Stages:
-Stage 1: Checkout (checkout scm)
-Stage 2: Install Dependencies (pip install -r requirements.txt)
-Stage 3: Run Unit Tests (pytest -v tests/)
-Stage 4: Package Artifact (tar -czvf dist/app-artifact.tar.gz ...)
-Post Action: archiveArtifacts 'dist/app-artifact.tar.gz'"""
-    add_figure_box(doc, 6, "Jenkins pipeline stages overview and build steps definition", fig6_text)
+    fig6_text = """Pipeline Definition: Pipeline script from SCM
+Branches to build: */main
+Script Path: Jenkinsfile
+Lightweight checkout: Enabled"""
+    add_figure_box(doc, 6, "Jenkins pipeline stages overview and build steps definition", fig6_text, image_path="images/fig5_jenkins_script.png")
     
     fig7_text = """pytest -v tests/
 ============================= test session starts =============================
@@ -745,14 +737,13 @@ tests/test_main.py::test_create_todo PASSED                              [100%]
 ======================== 3 passed, 1 warning in 1.62s ========================="""
     add_figure_box(doc, 7, "CI Enhancement: Automated Pytest unit test suite passing 3 out of 3 tests", fig7_text, image_path="images/fig7_pytest_pass.png")
     
-    fig8_text = """Jenkins Build #3 Overview:
-Status: SUCCESS
-Artifacts:
-  dist/app-artifact.tar.gz (Size: 4.8 KB) [view] [download]
-Fingerprint: SHA-256 e8f3a9b1...
-Changes:
-  2cf6ae7 feat(devops): add Jenkinsfile, GitHub Actions CI, Ansible role..."""
-    add_figure_box(doc, 8, "Jenkins build overview showing archived artifact dist/app-artifact.tar.gz", fig8_text)
+    fig8_text = """Jenkins Build #4 Overview:
+Status: SUCCESS (Green checkmark)
+Last Successful Artifacts:
+  app-artifact.tar.gz (1.40 KiB) [view]
+Test Result Trend: 3 Passed, 0 Skipped, 0 Failed
+Permalinks: Last build (#4), Last successful build (#4)"""
+    add_figure_box(doc, 8, "Jenkins build overview showing archived artifact dist/app-artifact.tar.gz", fig8_text, image_path="images/fig8_jenkins_build_overview.png")
     
     fig9_text = """GitHub Actions CI Workflow:
 Workflow: CI Pipeline (.github/workflows/ci.yml)

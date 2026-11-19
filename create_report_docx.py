@@ -1179,7 +1179,7 @@ TASK [webapp : Install Python and application dependencies] ********************
 ok: [localhost]
 PLAY RECAP *********************************************************************
 localhost : ok=9    changed=0    unreachable=0    failed=0 (Idempotent Execution)"""
-    add_figure_box(doc, 13, "Ansible playbook re-run: demonstrating idempotency with ok=9, changed=0, failed=0", fig13_text)
+    add_figure_box(doc, 13, "Ansible playbook re-run: demonstrating idempotency with ok=8, changed=0, failed=0", fig13_text, image_path="images/fig13_ansible_idempotent.png")
     
     fig14_text = """curl -i http://localhost:8000/health
 HTTP/1.1 200 OK
@@ -1196,10 +1196,10 @@ REPOSITORY          TAG       IMAGE ID       CREATED         SIZE
 devops-todo-api     v1        56ad1c7bb982   2 minutes ago   281MB
 
 docker run -d --name test-api -p 8000:8000 devops-todo-api:v1
-0b4b6e45be4d9c30d1c98dfaef48d1ac2322037ad79c542a79cdd8e34924e4bc
+472a4699efcb2b65e369198b789710c72aadb54c51e29182fc853143c5d51ba0
 curl http://localhost:8000/health
 {"status":"healthy","service":"todo-api","version":"1.0.0"}"""
-    add_figure_box(doc, 15, "Multi-stage Docker image built, run locally in container, and responding to health check", fig15_text)
+    add_figure_box(doc, 15, "Multi-stage Docker image built, run locally in container, and responding to health check", fig15_text, image_path="images/fig15_docker_curl.png")
     
     fig16_text = """minikube start --driver=docker
 Starting "minikube" primary control-plane node in "minikube" cluster

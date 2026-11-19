@@ -653,21 +653,8 @@ Building the multi-stage Docker image produced `devops-todo-api:v1`. Deploying t
 ![Figure 12: Ansible playbook initial run: tasks execute and handler triggers restart (changed=3, failed=0)](images/fig12_ansible_playbook.png)
 *Figure 12: Ansible playbook initial run: tasks execute and handler triggers restart (changed=3, failed=0)*
 
-```text
-ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
-PLAY [Deploy FastAPI Web Application] ******************************************
-TASK [Gathering Facts] *********************************************************
-ok: [localhost]
-TASK [webapp : Ensure target application directory exists] *********************
-ok: [localhost]
-TASK [webapp : Copy and extract application artifact to target host] ***********
-ok: [localhost]
-TASK [webapp : Install Python and application dependencies] ********************
-ok: [localhost]
-PLAY RECAP *********************************************************************
-localhost : ok=9    changed=0    unreachable=0    failed=0 (Idempotent Execution)
-```
-*Figure 13: Ansible playbook re-run: demonstrating idempotency with ok=9, changed=0, failed=0*
+![Figure 13: Ansible playbook re-run: demonstrating idempotency with ok=8, changed=0, failed=0](images/fig13_ansible_idempotent.png)
+*Figure 13: Ansible playbook re-run: demonstrating idempotency with ok=8, changed=0, failed=0*
 
 ```text
 curl -i http://localhost:8000/health
@@ -681,16 +668,7 @@ content-type: application/json
 ```
 *Figure 14: API successfully responding to curl on port 8000 with healthy JSON payload*
 
-```text
-docker images devops-todo-api:v1
-REPOSITORY          TAG       IMAGE ID       CREATED         SIZE
-devops-todo-api     v1        56ad1c7bb982   2 minutes ago   281MB
-
-docker run -d --name test-api -p 8000:8000 devops-todo-api:v1
-0b4b6e45be4d9c30d1c98dfaef48d1ac2322037ad79c542a79cdd8e34924e4bc
-curl http://localhost:8000/health
-{"status":"healthy","service":"todo-api","version":"1.0.0"}
-```
+![Figure 15: Multi-stage Docker image built, run locally in container, and responding to health check](images/fig15_docker_curl.png)
 *Figure 15: Multi-stage Docker image built, run locally in container, and responding to health check*
 
 ```text
